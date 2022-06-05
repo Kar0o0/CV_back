@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+    <header class="d-flex justify-content-center py-3 the-head" >
+        <ul class="nav nav-pills " id="head">
+          <li class="nav-item the-nav-item the-active-item"><a href="/" class="nav-link the-nav-link the-active-link" aria-current="page">خانه</a></li>
+          <li class="nav-item the-nav-item"><a href="#about" class="nav-link the-nav-link">درباره من</a></li>
+          <li class="nav-item the-nav-item"><a href="#abilities" class="nav-link the-nav-link">مهارت ها</a></li>
+          <li class="nav-item the-nav-item"><a href="#projects" class="nav-link the-nav-link">نمونه کار ها</a></li>
+          <li class="nav-item the-nav-item"><a href="#contact" class="nav-link the-nav-link">تماس با من</a></li>
+        </ul>
+    </header>
+
+    <div class="container userimg">
+      <div class="px-1 text-center">
+        <div class="userimg">
+        <img class="d-block mx-auto mb-1" src="{{ info.image.url }}" alt="امیرحسین کارحیدری">
+        <h1 class="display-5 fw-bold name">{{ info.name }}</h1>
+        <h3 class=" post">{{ info.abilities }}</h3>
+        <div class="col-lg-6 mx-auto">
+          <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+              <a href="#about" class="btn btn-primary btn-lg px-4 gap-3 the-primary-btn mt-3">در باره من</a>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="about" id="about">
+      <h2 class="heading text-center ">
+        من کی ام؟
+      </h2>
+      <div class="container col-12 py-3 px-3">
+        <div class="row">
+          <div class="about-left col-md-8 ">
+            <p style="text-align: justify; font-size: 1.5rem">{{ info.description }}</p>
+          </div>
+          <div class="about-right col-md-3 ">
+            <p><span>نام: </span>{{ info.name }}</p>
+            <p><span>سن: </span>{{ info.age }} سال </p>
+            <p><span>تحصیلات: </span>{{ info.graduation }}</p>
+            <p><span>مهارت: </span>{{ info.abilities }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="abilities" id="abilities">
+      <h2 class="heading text-center mt-5">
+        توانایی های من
+      </h2>
+      <div class="container col-12">
+        <div class="row">
+            {% for ability in abilities %}
+                <div class="col-md-4">
+                    <div class="box">
+                        <i class="fas fa-desktop"></i>
+                        <span>{{ ability.experience }} سابقه</span>
+                        <h3>{{ ability.title }}</h3>
+                        <p>{{ ability.description }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <section class="projects" id="projects">
+      <h2 class="heading text-center mt-5">
+        نمونه کار های من
+      </h2>
+      <div class="container col-12">
+        <div class="row">
+            {% for project in projects %}
+                <div class="col-md-4">
+              <div class="card shadow-sm the-card mt-2">
+                  <img src="{{ project.image.url }}" alt="عنوان پروژه">
+                <div class="card-body">
+                  <h3 class="heading">{{ project.title }}</h3>
+                  <p class="card-text">
+                      {{ project.description }}
+                  </p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <a href="{{ project.link }}" class="btn the-btn">مشاهده</a>
+                    <small class="text-muted">{{ project.year }}</small>
+                  </div>
+                </div>
+            </div>
+          </div>
+            {% endfor %}
+
+        </div>
+      </div>
+    </section>
+
+
+    <section class="contact" id="contact">
+      <h2 class="heading text-center mt-5">
+        تماس با من
+      </h2>
+      <div class="container">
+
+        <div class="row">
+
+          <div class="info col-md-6">
+            <p><span><i class="fas fa-phone py-4 px-3"></i></span>{{ info.phoneNumber }}</p>
+            <p><span><i class="fas fa-envelope py-4 px-3"></i></span>{{ info.email }}</p>
+            <p><span><i class="fas fa-paper-plane py-4 px-3"></i></span>{{ info.telegramId }}</p>
+            <p><span><i class="fas fa-map-pin py-4 px-3"></i></span>{{ info.address }}</p>
+          </div>
+
+          <div class="message col-md-6">
+            <form action="{% url 'main_page' %}" class="form-control p-3", method="post">
+              {% csrf_token %}
+                <div class="col-md-12 form-group mt-3">
+                    {{ contact_form.name.label_tag }}
+                    {{ contact_form.name }}
+                    {{ contact_form.name.errors }}
+                </div>
+
+                <div class="col-md-12 form-group mt-3">
+                    {{ contact_form.email.label_tag }}
+                    {{ contact_form.email }}
+                    {{ contact_form.email.errors }}
+                </div>
+
+                <div class="col-md-12 form-group mt-3">
+                    {{ contact_form.subject.label_tag }}
+                    {{ contact_form.subject }}
+                    {{ contact_form.subject.errors }}
+                </div>
+
+                <div class="col-md-12 form-group mt-3">
+                    {{ contact_form.message.label_tag }}
+                    {{ contact_form.message }}
+                    {{ contact_form.message.errors }}
+                </div>
+              <button class="btn the-btn col-12 p-2 my-2"><i class="fas fa-paper-plane"></i> ارسال</button>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <footer>
+      <h1 class="text-center the-footer-text">امیرحسین کارحیدری</h1>
+      <p class="text-center the-footerptext">تمامی حقوق مادی و معنوی این وب سایت متعلق به امیرحسین کارحیدری است</p>
+    </footer>
+{% endblock %}
